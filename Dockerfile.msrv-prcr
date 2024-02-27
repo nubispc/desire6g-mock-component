@@ -23,4 +23,4 @@ ENV MESSAGING_SYSTEM=rabbitmq \
     OUTPUT_TOPIC=output_topic
 
 # Run the processor.py script when the container launches
-CMD ["python", "-m", "ProcessingSystems.processor"]
+CMD ["python", "processor.py"]
