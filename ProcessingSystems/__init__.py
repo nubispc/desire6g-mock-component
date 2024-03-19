@@ -1,6 +1,5 @@
-# __init__.py
+# ProcessingSystems/__init__.py
 
-# Optionally include any initialization code or imports here
-# For example:
-# from . import processor_rabbitmq
-# from . import processor_kafka
+# Import necessary modules and classes
+from .rabbitmq import consume_messages as consume_rabbitmq_messages
+from .kafka import consume_messages as consume_kafka_messages

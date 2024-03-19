@@ -1,13 +1,15 @@
-import os
+# processor.py
+
 import asyncio
-from ProcessingSystems import processor_rabbitmq, processor_kafka
+from ProcessingSystems.rabbitmq import consume_messages
 
-# Get the messaging system from environment variable
-messaging_system = os.getenv("MESSAGING_SYSTEM", "rabbitmq")
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    connection = loop.run_until_complete(consume_messages())
 
-if messaging_system.lower() == "rabbitmq":
-    asyncio.run(processor_rabbitmq.main_loop())  # Await the main_loop coroutine
-elif messaging_system.lower() == "kafka":
-    asyncio.run(processor_kafka.main_loop())  # Await the main_loop coroutine
-else:
-    raise ValueError("Invalid messaging system. Please specify either 'rabbitmq' or 'kafka'.")
+    try:
+        loop.run_forever()
+    except KeyboardInterrupt:
+        logger.info("Processor interrupted, closing connection...")
+    finally:
+        loop.run_until_complete(connection.close())
